@@ -1,18 +1,89 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Barge, Vessel, Claim} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({username: 'stephen', password: 'timebar'}),
+    User.create({username: 'jessica', password: 'knitting'})
+  ])
+
+  const vessels = await Promise.all([
+    Vessel.create({name: 'vessel 1'}),
+    Vessel.create({name: 'vessel 2'})
+  ])
+
+  const barges = await Promise.all([
+    Barge.create({name: 'barge 1'}),
+    Barge.create({name: 'barge 2'}),
+    Barge.create({name: 'barge 3'}),
+    Barge.create({name: 'barge 4'}),
+    Barge.create({name: 'barge 5'})
+  ])
+
+  const claims = await Promise.all([
+    Claim.create({
+      file: 123,
+      trade: 123,
+      allocation: 123,
+      restriction: 28,
+      reminder: [7, 14],
+      start: '2019-01-01',
+      end: '2019-06-01',
+      kind: 0,
+      risk: 0,
+      notes: 'no notes here',
+      barges: [1, 2, 3]
+    }),
+    Claim.create({
+      file: 234,
+      trade: 234,
+      allocation: 123,
+      restriction: 28,
+      reminder: [7, 14],
+      start: '2019-01-01',
+      end: '2019-06-01',
+      kind: 0,
+      risk: 0,
+      notes: 'no notes here',
+      barges: [1, 2, 4]
+    }),
+    Claim.create({
+      file: 345,
+      trade: 345,
+      allocation: 123,
+      restriction: 28,
+      reminder: [7, 14],
+      start: '2019-01-01',
+      end: '2019-06-01',
+      kind: 0,
+      risk: 0,
+      notes: 'no notes here',
+      barges: [1, 2]
+    }),
+    Claim.create({
+      file: 456,
+      trade: 456,
+      allocation: 123,
+      restriction: 28,
+      reminder: [7, 14],
+      start: '2019-01-01',
+      end: '2019-06-01',
+      kind: 0,
+      risk: 0,
+      notes: 'no notes here',
+      barges: [2, 3]
+    })
   ])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${vessels.length} vessels`)
+  console.log(`seeded ${barges.length} barges`)
+  console.log(`seeded ${claims.length} users`)
   console.log(`seeded successfully`)
 }
 
